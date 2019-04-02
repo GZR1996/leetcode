@@ -1,5 +1,8 @@
 package leetcode;
 
+/**
+ * @author 甘梓润
+ */
 public class Solution {
 	
 	public static int insertSearch(int[] nums, int target) {		
@@ -24,12 +27,12 @@ public class Solution {
 	}
 	
 	public static boolean isValidSudoku(char[][] board) {
-		for (int row = 0; row < 9; ++row) {
+		for (int row = 0; row < board.length; ++row) {
 			boolean[] rows = new boolean[9];
 			boolean[] cols = new boolean[9];
 			boolean[] cube = new boolean[9];
 			
-			for (int col = 0; col < 9; col++) {
+			for (int col = 0; col < board.length; col++) {
 				int crow = 3 * (row / 3) + (col / 3);
 		        int ccol = 3 * (row % 3) + (col % 3);
 		        

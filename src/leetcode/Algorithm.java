@@ -1,5 +1,8 @@
 package leetcode;
 
+/**
+ * @author 甘梓润
+ */
 public class Algorithm {
 
 	public static void main(String[] args) {
