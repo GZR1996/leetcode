@@ -154,4 +154,37 @@ public class Solution {
 			}
 		} 
 	}
+	
+	public static int findMissingPositive(int[] nums) {
+		int left = 0, right = Integer.MAX_VALUE;
+		int index;
+		
+		for (index = 0; index < nums.length; ++index) {
+			if (nums[index] > left) {
+				left = nums[index];
+				break;
+			}
+		}
+		
+		for (; index < nums.length; ++index) {
+			if (nums[index] <= 0) {
+				continue;
+			}
+			
+			if (nums[index] < left) {
+				right = left;
+				left = nums[index];
+			} else if (nums[index] > left && nums[index] < right) {
+				right = nums[index];
+			}
+		}
+		
+		if (left == 1 && right != 2){
+			return 2;
+		} else if (left == 1 && right == 2) {
+			return 3;
+		} else {
+			return 1;
+		}
+	}	
 }

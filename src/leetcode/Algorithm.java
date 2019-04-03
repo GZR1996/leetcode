@@ -6,9 +6,8 @@ package leetcode;
 public class Algorithm {
 
 	public static void main(String[] args) {
-		int[] nums = {10, 1, 2, 7, 6, 1, 5};
+		int[] nums = {1, 2, 0, 4};
 		int target = 8;
-		int a = 1;
-		System.out.println(Solution.combinationSum2(nums, target));
+		System.out.println(Solution.findMissingPositive(nums));
 	}
 }
