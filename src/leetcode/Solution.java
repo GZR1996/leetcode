@@ -144,6 +144,7 @@ public class Solution {
 			return;
 		} else if (target > 0){
 			for (int i = index; i < candidates.length; ++i) {
+				// 规避重复
 				if (i > index && candidates[i] == candidates[i-1]) {
 					continue;
 				}
