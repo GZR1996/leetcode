@@ -6,8 +6,9 @@ package leetcode;
 public class Algorithm {
 
 	public static void main(String[] args) {
-		int[] nums = {1};
-		int target = 91;
-		System.out.println(Solution.insertSearch(nums, target));
+		int[] nums = {10, 1, 2, 7, 6, 1, 5};
+		int target = 8;
+		int a = 1;
+		System.out.println(Solution.combinationSum2(nums, target));
 	}
 }
