@@ -6,8 +6,8 @@ package leetcode;
 public class Algorithm {
 
 	public static void main(String[] args) {
-		int[] nums = {1, 2, 0, 4};
+		int[] nums = {-1, 2, 0, 4, 5};
 		int target = 8;
-		System.out.println(Solution.findMissingPositive(nums));
+		System.out.println(Solution.firstMissingPositive(nums));
 	}
 }
