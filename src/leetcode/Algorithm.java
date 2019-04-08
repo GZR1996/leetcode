@@ -6,8 +6,7 @@ package leetcode;
 public class Algorithm {
 
 	public static void main(String[] args) {
-		int[] nums = {-1, 2, 0, 4, 5};
-		int target = 8;
-		System.out.println(Solution.firstMissingPositive(nums));
+		int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+		System.out.println(Solution.maxSubArray(nums));
 	}
 }
