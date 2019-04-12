@@ -6,7 +6,7 @@ package leetcode;
 public class Algorithm {
 
 	public static void main(String[] args) {
-		int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-		System.out.println(Solution.maxSubArray(nums));
+		int[] nums = {3, 2, 1, 0, 5};
+		System.out.println(Solution.canJump(nums));
 	}
 }

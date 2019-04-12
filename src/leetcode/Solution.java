@@ -278,7 +278,7 @@ public class Solution {
 	
 	/**
 	 * LeetCode 53 Easy
-	 * 动态规划
+	 *   动态规划
 	 * 递推公式为：	maxSubArray(A, i) = maxSubArray(A, i - 1) > 0 ? maxSubArray(A, i - 1) : 0 + A[i]; 
 	 * @param nums
 	 */
@@ -296,6 +296,130 @@ public class Solution {
         return max;
 	}
 	
+	/**
+	 * LeetCode 54
+	 * @param matrix
+	 * @return
+	 */
+	public static List<Integer> spiralOrder(int[][] matrix) {
+		List<Integer> list = new ArrayList<>();
+		if (matrix.length == 0) {
+			return list;
+		}
+		
+		int i = 0, j = 0;
+		int minI = 1, minJ = 0;
+		int maxI = matrix.length, maxJ = matrix[0].length;
+		int maxSize = maxI * maxJ;
+		
+		while (list.size() != maxSize) {
+			while (list.size() != maxSize && j < maxJ) {
+				list.add(matrix[i][j++]);
+			}
+			i ++; j --; maxJ --;
+			while (list.size() != maxSize && i < maxI) {
+				list.add(matrix[i++][j]);
+			}
+			i --; j --; maxI --;
+			while (list.size() != maxSize && j >= minJ) {
+				list.add(matrix[i][j--]);
+			}
+			i --; j ++; minJ ++;
+			while (list.size() != maxSize && i >= minI) {
+				list.add(matrix[i--][j]);
+			}
+			i ++; j ++; minI ++;
+		}
+		return list;
+	}
+	
+	/**
+	 * LeetCode 55 middle
+	 * Backtracking
+	 * This is the inefficient solution where we try every single jump pattern that takes us from the first position to the last. 
+	 * We start from the first position and jump to every index that is reachable. 
+	 * We repeat the process until last index is reached. When stuck, backtrack.
+	 * @param position
+	 * @param nums
+	 * @return
+	 */
+	public static boolean canJumpFromPosition(int position, int[] nums) {
+        if (position == nums.length - 1) {
+            return true;
+        }
+
+        int furthestJump = Math.min(position + nums[position], nums.length - 1);
+        // old, which is inefficient
+        // for (int nextPosition = position + 1; nextPosition <= furthestJump; nextPosition++) {
+        // new, this is better, 
+        // a，跳远的位置是接近furthestJump值而不是1
+        for (int nextPosition = furthestJump; nextPosition > position; nextPosition--) {
+            if (canJumpFromPosition(nextPosition, nums)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean canJump(int[] nums) {
+        return canJumpFromPosition(0, nums);
+    }	
+	
+    /**
+     * LeetCode 55 middle
+     * Dynamic Programming Top-down
+     * Top-down Dynamic Programming can be thought of as optimized backtracking. 
+     * It relies on the observation that once we determine that a certain index is good / bad, this result will never change. 
+     * This means that we can store the result and not need to recompute it every time.
+     * Therefore, for each position in the array, we remember whether the index is good or bad. 
+     * Let's call this array memo and let its values be either one of: GOOD, BAD, UNKNOWN. 
+     * This technique is called memoization[3].
+     * An example of a memoization table for input array nums = [2, 4, 2, 1, 0, 2, 0] can be seen in the diagram below. 
+     * We write G for a GOOD position and B for a BAD one. 
+     * We can see that we cannot start from indices 2, 3 or 4 and eventually reach last index (6), 
+     * but we can do that from indices 0, 1, 5 and (trivially) 6.
+     * Index	0	1	2	3	4	5	6
+     * nums		2	4	2	1	0	2	0
+     * memo		G	G	B	B	B	G	G
+     * 1.Initially, all elements of the memo table are UNKNOWN, except for the last one, which is (trivially) GOOD (it can reach itself)
+     * 		1.Modify the backtracking algorithm such that the recursive step first checks if the index is known (GOOD / BAD)
+     * 		2.If it is known then return True / False
+     * 2.Otherwise perform the backtracking steps as before
+     * 3.Once we determine the value of the current index, we store it in the memo table
+     */
+    enum Index {
+        GOOD, BAD, UNKNOWN
+    }
+    
+    private static Index[] memo;
+
+    public static boolean canJumpFromPosition2(int position, int[] nums) {
+        if (memo[position] != Index.UNKNOWN) {
+            return memo[position] == Index.GOOD ? true : false;
+        }
+
+        int furthestJump = Math.min(position + nums[position], nums.length - 1);
+        for (int nextPosition = position + 1; nextPosition <= furthestJump; nextPosition++) {
+            if (canJumpFromPosition2(nextPosition, nums)) {
+                memo[position] = Index.GOOD;
+                return true;
+            }
+        }
+
+        memo[position] = Index.BAD;
+        return false;
+    }
+
+    public static boolean canJump2(int[] nums) {
+        memo = new Index[nums.length];
+        for (int i = 0; i < memo.length; i++) {
+            memo[i] = Index.UNKNOWN;
+        }
+        memo[memo.length - 1] = Index.GOOD;
+        return canJumpFromPosition2(0, nums);
+    }
+    
     private static void swap(int[] nums, int i, int j){
         int temp = nums[i];
         nums[i] = nums[j];
