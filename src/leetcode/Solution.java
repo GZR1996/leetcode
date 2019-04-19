@@ -2,6 +2,7 @@ package leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -419,6 +420,40 @@ public class Solution {
         memo[memo.length - 1] = Index.GOOD;
         return canJumpFromPosition2(0, nums);
     }
+
+	public static int[][] merge(int[][] intervals) {
+    	int count = 0;
+    	Arrays.sort(intervals, new Comparator<int[]>() {
+			@Override
+			public int compare(int[] o1, int[] o2) {
+				return o1[0] - o2[0];
+			}
+		});
+
+    	for (int i = 1; i < intervals.length; i++) {
+    		int[] i1 = intervals[i-1];
+    		int[] i2 = intervals[i];
+
+    		if (i1[1] > i2[0]) {
+				count += 1;
+    			i1[1] = i2[1];
+    			i2[0] = Integer.MAX_VALUE;
+    			i2[1] = Integer.MAX_VALUE;
+    			i += 1;
+			}
+    	}
+
+    	int[][] res = new int[intervals.length-count][2];
+    	for (int i = 0, j = 0; i < intervals.length; i++) {
+    		if (intervals[i][0] == Integer.MAX_VALUE || intervals[i][1] == Integer.MAX_VALUE) {
+    			continue;
+			}
+    		res[j][0] = intervals[i][0];
+    		res[j][1] = intervals[i][1];
+    		j += 1;
+		}
+		return res;
+	}
     
     private static void swap(int[] nums, int i, int j){
         int temp = nums[i];
