@@ -1,9 +1,6 @@
 package leetcode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author 甘梓润
@@ -248,6 +245,75 @@ public class Solution {
 		}
 		else {
 			return result;
+		}
+	}
+
+	/**
+	 * LeetCode 46
+	 * @param nums
+	 * @return
+	 */
+	public static List<List<Integer>> permute(int[] nums) {
+		List<List<Integer>> res = new ArrayList<>();
+		putElement(res, new ArrayList<>(), nums);
+		return res;
+	}
+
+	/**
+	 * LeetCode 46
+	 * @param list
+	 * @param element
+	 * @param nums
+	 */
+	private static void putElement(List<List<Integer>> list, List<Integer> element, int[] nums) {
+		if (element.size() == nums.length) {
+			list.add(new ArrayList<>(element));
+		} else {
+			for (int i = 0; i < nums.length; i++) {
+				if (element.contains(nums[i])) {
+					continue;
+				}
+				element.add(nums[i]);
+				putElement(list, element, nums);
+				element.remove(element.size()-1);
+			}
+		}
+	}
+
+	/**
+	 * LeetCode 47
+	 * @param nums
+	 * @return
+	 */
+	public static List<List<Integer>> permuteUnique(int[] nums) {
+		List<List<Integer>> res = new ArrayList<>();
+		// 要排序，才能配合i-1和i确定重复值
+		Arrays.sort(nums);
+		putElementUnique(res, new ArrayList<>(), nums, new boolean[nums.length]);
+		return res;
+	}
+
+	/**
+	 * LeetCode 47
+	 * @param list
+	 * @param element
+	 * @param nums
+	 * @param isUsed
+	 */
+	private static void putElementUnique(List<List<Integer>> list, List<Integer> element, int[] nums, boolean[] isUsed) {
+		if (element.size() == nums.length) {
+			list.add(new ArrayList<>(element));
+		} else {
+			for (int i = 0; i < nums.length; i++) {
+				if(isUsed[i] || i > 0 && nums[i] == nums[i-1] && !isUsed[i - 1]) {
+					continue;
+				}
+				element.add(nums[i]);
+				isUsed[i] = true;
+				putElementUnique(list, element, nums, isUsed);
+				element.remove(element.size()-1);
+				isUsed[i] = false;
+			}
 		}
 	}
 	
